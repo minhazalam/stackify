@@ -1,27 +1,33 @@
 """
 Stackify CLI - Entry Point
 
-This module defines the main CLI application using Typer.
-All commands are registered here.
-
 Author: Minhaz Alam
 Created: 2026-03
 """
 
 import typer
+from stackify.cli.commands import init_project
 
-app = typer.Typer()
+app = typer.Typer(help="Stackify CLI")
+
+
+@app.callback()
+def main():
+    """
+    Stackify CLI root.
+    """
+    pass
 
 
 @app.command()
-def hello() -> None:
+def init(name: str):
     """
-    Test command to verify that the CLI is working.
+    Initialize a new data engineering project.
 
-    Returns:
-        None
+    Args:
+        name (str): Project name
     """
-    print("Stackify CLI is working 🚀")
+    init_project(name)
 
 
 if __name__ == "__main__":
