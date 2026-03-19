@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stackgen"
+version = "0.1.0"
+description = "CLI tool to bootstrap data engineering projects"
+authors = [
+    { name = "Minhaz Alam" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+
+dependencies = [
+    "typer",
+    "questionary",
+    "jinja2",
+]
+
+[project.scripts]
+stackgen = "stackgen.cli.main:app"
