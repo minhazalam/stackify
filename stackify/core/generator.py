@@ -40,7 +40,7 @@ def create_project_structure(project_name: str, mode: str = "full") -> None:
         os.makedirs(os.path.join(base_path, folder), exist_ok=True)
 
     # Base setup
-    create_base_files(base_path, project_name)
+    create_base_files(base_path, project_name, mode)
     create_docker_compose(base_path, project_name, mode)
 
     # Batch
@@ -112,9 +112,12 @@ def create_base_files(base_path: str, project_name: str, mode: str) -> None:
 
 def create_docker_compose(base_path: str, project_name: str, mode: str) -> None:
     render_template(
-        "docker/docker-compose.yml.j2",
-        os.path.join(base_path, "docker-compose.yml"),
-        {"project_name": project_name},
+    "docker/docker-compose.yml.j2",
+    os.path.join(base_path, "docker-compose.yml"),
+        {
+            "project_name": project_name,
+            "mode": mode,
+        },
     )
 # def create_docker_compose(base_path: str, project_name: str) -> None:
 #     """
