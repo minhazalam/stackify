@@ -10,7 +10,7 @@ include-package-data = true
 
 [project]
 name = "stackgen"
-version = "0.1.1"
+version = "0.1.2"
 description = "CLI tool to bootstrap data engineering projects"
 authors = [
     { name = "Minhaz Alam" }
