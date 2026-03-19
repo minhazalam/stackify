@@ -10,16 +10,25 @@ include-package-data = true
 
 [project]
 name = "stackgen"
-version = "0.1.5"
+version = "0.1.6"
 description = "CLI tool to bootstrap data engineering projects"
-readme = "README.md"
+readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.8"
 
 authors = [
     { name = "Minhaz Alam", email = "minhazalam365@gmail.com" }
 ]
 
-license = { text = "MIT" }
+license = { file = "LICENSE" }
+
+keywords = ["data-engineering", "cli", "spark", "kafka", "airflow"]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
 
 dependencies = [
     "typer",
