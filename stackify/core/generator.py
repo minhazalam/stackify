@@ -23,13 +23,18 @@ def create_project_structure(project_name: str, mode: str = "full") -> None:
 
     os.makedirs(base_path, exist_ok=True)
 
+    # Base folders (always created)
     folders = [
-        "airflow/dags",
         "spark/jobs",
         "config",
-        "kafka",
     ]
+    if mode in ["batch", "full"]:
+        folders.append("airflow/dags")
+    # Add kafka only if needed
+    if mode in ["streaming", "full"]:
+        folders.append("kafka")
 
+    # Create folders
     for folder in folders:
         os.makedirs(os.path.join(base_path, folder), exist_ok=True)
 
@@ -37,12 +42,12 @@ def create_project_structure(project_name: str, mode: str = "full") -> None:
     create_base_files(base_path, project_name)
     create_docker_compose(base_path, project_name)
 
-    # Batch pipeline
+    # Batch
     if mode in ["batch", "full"]:
         create_spark_job(base_path)
         create_airflow_dag(base_path, project_name)
 
-    # Streaming pipeline
+    # Streaming
     if mode in ["streaming", "full"]:
         create_kafka_producer(base_path)
         create_spark_streaming_job(base_path)
