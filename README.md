@@ -1,6 +1,6 @@
-# 🚀 Stackify CLI
+# 🚀 Stackgen CLI
 
-**Stackify** is a developer-first CLI tool to **bootstrap production-ready data engineering projects** in seconds.
+**Stackgen** is a developer-first CLI tool to **bootstrap production-ready data engineering projects** in seconds.
 
 Build batch, streaming, or full data pipelines with a single command.
 
@@ -40,8 +40,8 @@ Build batch, streaming, or full data pipelines with a single command.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/minhazalam/stackify.git
-cd stackify
+git clone https://github.com/minhazalam/stackgen.git
+cd stackgen
 ```
 
 ---
@@ -66,7 +66,7 @@ pip install -r requirements.txt
 ### 4. Run CLI
 
 ```bash
-python -m stackify.cli.main init my-project
+python -m stackgen.cli.main init my-project
 ```
 
 ---
@@ -144,7 +144,7 @@ Feel free to open issues or submit PRs.
 
 ## 📌 Vision
 
-Stackify aims to become a **go-to CLI tool for data engineers** to quickly bootstrap scalable and production-ready data platforms.
+Stackgen aims to become a **go-to CLI tool for data engineers** to quickly bootstrap scalable and production-ready data platforms.
 
 ---
 

@@ -9,7 +9,7 @@ Created: 2026-03
 """
 
 import os
-from stackify.core.template_engine import render_template
+from stackgen.core.template_engine import render_template
 
 
 def create_project_structure(project_name: str, mode: str = "full") -> None:
@@ -186,7 +186,7 @@ def create_docker_compose(base_path: str, project_name: str, mode: str) -> None:
 
 #     spark_job = (
 #         "from pyspark.sql import SparkSession\n\n"
-#         "spark = SparkSession.builder.appName('StackifyJob').getOrCreate()\n\n"
+#         "spark = SparkSession.builder.appName('StackgenJob').getOrCreate()\n\n"
 #         "data = [('Alice', 25), ('Bob', 30)]\n"
 #         "df = spark.createDataFrame(data, ['name', 'age'])\n\n"
 #         "df.show()\n\n"
@@ -219,7 +219,7 @@ def create_spark_job(base_path: str) -> None:
 # from datetime import datetime
 
 # default_args = {{
-#     "owner": "stackify",
+#     "owner": "stackgen",
 #     "start_date": datetime(2024, 1, 1),
 # }}
 

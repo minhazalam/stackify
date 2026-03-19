@@ -1,5 +1,5 @@
 """
-Stackify CLI Commands
+Stackgen CLI Commands
 
 This module contains implementations of CLI commands
 such as project initialization.
@@ -9,7 +9,7 @@ Created: 2026-03
 """
 
 import typer
-from stackify.core.generator import create_project_structure
+from stackgen.core.generator import create_project_structure
 import questionary
 
 

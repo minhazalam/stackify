@@ -1,20 +1,20 @@
 """
-Stackify CLI - Entry Point
+Stackgen CLI - Entry Point
 
 Author: Minhaz Alam
 Created: 2026-03
 """
 
 import typer
-from stackify.cli.commands import init_project
+from stackgen.cli.commands import init_project
 
-app = typer.Typer(help="Stackify CLI")
+app = typer.Typer(help="Stackgen CLI")
 
 
 @app.callback()
 def main():
     """
-    Stackify CLI root.
+    Stackgen CLI root.
     """
     pass
 
