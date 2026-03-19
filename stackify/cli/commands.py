@@ -10,6 +10,7 @@ Created: 2026-03
 
 import typer
 from stackify.core.generator import create_project_structure
+import questionary
 
 
 def init_project(project_name: str) -> None:
@@ -24,21 +25,18 @@ def init_project(project_name: str) -> None:
     """
     typer.echo(f"\n🚀 Initializing project: {project_name}\n")
 
-    # Prompt user
-    typer.echo("Select pipeline type:")
-    typer.echo("1. Batch")
-    typer.echo("2. Streaming")
-    typer.echo("3. Full")
+    mode = questionary.select(
+        "Select pipeline type:",
+        choices=[
+            "Batch",
+            "Streaming",
+            "Full",
+        ],
+    ).ask()
 
-    choice = typer.prompt("Enter choice (1/2/3)", default="3")
-
-    mode_map = {
-        "1": "batch",
-        "2": "streaming",
-        "3": "full",
-    }
-
-    mode = mode_map.get(choice, "full")
+    if not mode:
+        typer.echo("❌ No mode selected. Exiting.")
+        raise typer.Exit()
 
     typer.echo(f"\n⚙️ Selected mode: {mode}\n")
 
