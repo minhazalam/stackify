@@ -34,6 +34,7 @@ def create_project_structure(project_name: str) -> None:
     create_base_files(base_path, project_name)
     create_docker_compose(base_path, project_name)
     create_spark_job(base_path)
+    create_airflow_dag(base_path, project_name)
 
 
 def create_base_files(base_path: str, project_name: str) -> None:
@@ -89,27 +90,44 @@ def create_docker_compose(base_path: str, project_name: str) -> None:
     Create docker-compose.yml file.
     """
 
-    docker_content = (
-        "version: '3.8'\n\n"
-        "services:\n"
-        "  spark:\n"
-        "    image: bitnami/spark:latest\n"
-        f"    container_name: {project_name}_spark\n"
-        "    environment:\n"
-        "      - SPARK_MODE=master\n"
-        "    ports:\n"
-        "      - \"8080:8080\"\n"
-        "      - \"7077:7077\"\n"
-        "    volumes:\n"
-        "      - ./spark/jobs:/jobs\n"
-        "    restart: unless-stopped\n"
-    )
+    docker_content = f"""
+version: '3.8'
+
+services:
+  spark:
+    image: bitnami/spark:latest
+    container_name: {project_name}_spark
+    environment:
+      - SPARK_MODE=master
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    volumes:
+      - ./spark/jobs:/opt/airflow/spark/jobs
+
+  airflow:
+    image: apache/airflow:2.7.1
+    container_name: {project_name}_airflow
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=SequentialExecutor
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./spark/jobs:/opt/airflow/spark/jobs
+    command: >
+      bash -c "airflow db init &&
+               airflow users create --username admin --password admin --firstname admin --lastname user --role Admin --email admin@example.com &&
+               airflow webserver & airflow scheduler"
+"""
 
     with open(os.path.join(base_path, "docker-compose.yml"), "w") as f:
         f.write(docker_content)
 
 
 def create_spark_job(base_path: str) -> None:
+
     """
     Create a sample PySpark job.
     """
@@ -127,3 +145,39 @@ def create_spark_job(base_path: str) -> None:
 
     with open(job_path, "w") as f:
         f.write(spark_job)
+
+def create_airflow_dag(base_path: str, project_name: str) -> None:
+    """
+    Create a simple Airflow DAG to run Spark job.
+
+    Args:
+        base_path (str): Absolute path of the project
+        project_name (str): Project name
+    """
+
+    dag_content = f"""from airflow import DAG
+from airflow.operators.bash import BashOperator
+from datetime import datetime
+
+default_args = {{
+    "owner": "stackify",
+    "start_date": datetime(2024, 1, 1),
+}}
+
+with DAG(
+    dag_id="{project_name}_pipeline",
+    default_args=default_args,
+    schedule_interval="@daily",
+    catchup=False,
+) as dag:
+
+    run_spark_job = BashOperator(
+        task_id="run_spark_job",
+        bash_command="python /opt/airflow/spark/jobs/batch_job.py",
+    )
+"""
+
+    dag_path = os.path.join(base_path, "airflow", "dags", "pipeline_dag.py")
+
+    with open(dag_path, "w") as f:
+        f.write(dag_content)
