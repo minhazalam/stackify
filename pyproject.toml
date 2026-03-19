@@ -10,13 +10,16 @@ include-package-data = true
 
 [project]
 name = "stackgen"
-version = "0.1.3"
+version = "0.1.5"
 description = "CLI tool to bootstrap data engineering projects"
-authors = [
-    { name = "Minhaz Alam" }
-]
 readme = "README.md"
 requires-python = ">=3.8"
+
+authors = [
+    { name = "Minhaz Alam", email = "minhazalam365@gmail.com" }
+]
+
+license = { text = "MIT" }
 
 dependencies = [
     "typer",
